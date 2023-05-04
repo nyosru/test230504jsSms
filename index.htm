@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test js sms</title>
+    <style>
+        html,
+        body {
+            font-family: tahoma;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="min-height: 80vh;">
+        <textarea name="text" id="text" rows="5" style="width: 100%;"></textarea>
+        <br />
+        <center>
+            <button onclick="showResult();" style="background-color: #ff0; border-radius: 5px; padding: 5px;">
+          Сделать СМС-ки!
+        </button>
+        </center>
+        <br/>
+        <br/>
+        <br/>
+        <div>
+            <fieldset>
+                <legend>результат</legend>
+                <div id="result"></div>
+            </fieldset>
+        </div>
+    </div>
+
+    <div style="padding: 5px; background-color: #ccf; text-align: center;">
+        Демо сайт создан
+        <a href="https://php-cat.com" class="text-white" target="_blank">
+        Сергеем Баклановым
+      </a>
+    </div>
+</body>
+
+<script>
+    function showResult() {
+        const textarea = document.getElementById('text')
+            // const value = textarea.value
+
+        const div = document.getElementById('result')
+            //   div.innerHTML = value;
+
+        div.innerHTML = splitIntoSms(textarea.value)
+
+        return false
+    }
+
+    function splitIntoSms(text) {
+        const words = text.split(' ')
+        const n = Math.ceil(text.length / 140)
+        if (n === 1) {
+            return [text]
+        }
+        const fragments = []
+        let currentFragment = ''
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i]
+            if (
+                currentFragment.length + word.length + n.toString().length + 2 >
+                140
+            ) {
+                fragments.push(
+                    currentFragment.trim() + ` ${fragments.length + 1}/${n}`,
+                )
+                currentFragment = ''
+            }
+            currentFragment += ` ${word}`
+        }
+        fragments.push(currentFragment.trim() + ` ${fragments.length + 1}/${n}`)
+        return fragments
+    }
+</script>
+
+</html>
