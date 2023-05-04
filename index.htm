@@ -45,12 +45,12 @@
 <script>
     function showResult() {
         const textarea = document.getElementById('text')
-            // const value = textarea.value
 
         const div = document.getElementById('result')
-            //   div.innerHTML = value;
 
-        div.innerHTML = splitIntoSms(textarea.value)
+        const result0 = splitIntoSms(textarea.value)
+        let text = result0.join(' <br/><br/> ')
+        div.innerHTML = text
 
         return false
     }
